@@ -4,9 +4,9 @@
 #
 #    See the file LICENSE.txt for your full rights.
 #
-#    $Revision: 775 $
+#    $Revision: 1167 $
 #    $Author: tkeffer $
-#    $Date: 2013-01-01 08:18:17 -0800 (Tue, 01 Jan 2013) $
+#    $Date: 2013-04-13 07:44:23 -0700 (Sat, 13 Apr 2013) $
 #
 """For uploading files to a remove server via FTP"""
 
@@ -22,7 +22,7 @@ class RsyncUpload(object):
     Keeps track of what files have changed, and only updates changed files."""
 
     def __init__(self, local_root, remote_root,
-                 server, user=None, delete=False):
+                 server, user=None, delete=False, port=None):
         """Initialize an instance of RsyncUpload.
         
         After initializing, call method run() to perform the upload.
@@ -39,6 +39,7 @@ class RsyncUpload(object):
         self.server      = server
         self.user        = user
         self.delete      = delete
+        self.port        = port
 
     def run(self):
         """Perform the actual upload."""
@@ -57,6 +58,11 @@ class RsyncUpload(object):
         else:
             rsyncremotespec = "%s:%s" % (self.server, self.remote_root)
         
+        if self.port is not None and len(self.port.strip()) > 0:
+            rsyncsshstring = "ssh -p %s" % (self.port,)
+        else:
+            rsyncsshstring = "ssh"
+
         cmd = ['rsync']
         # archive means:
         #    recursive, copy symlinks as symlinks, preserve permissions,
@@ -65,17 +71,18 @@ class RsyncUpload(object):
         #    no hardlinks, and no extended attributes
         cmd.extend(["--archive"])
         # Remove files remotely when they're removed locally
-        cmd.extend(["--stats"])
+        # cmd.extend(["--stats"])
         if self.delete:
             cmd.extend(["--delete"])
-        cmd.extend(["-e", "ssh"])
+        cmd.extend(["-e %s" % rsyncsshstring])
         cmd.extend([rsynclocalspec])
         cmd.extend([rsyncremotespec])
         
         try:
-            syslog.syslog(syslog.LOG_DEBUG, "rsyncupload: rsync invocation: %s" % " ".join(cmd))
-            output = subprocess.check_output(cmd)
-            stroutput = output.encode("utf-8")
+            rsynccmd = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        
+            stdout = rsynccmd.communicate()[0]
+            stroutput = stdout.encode("utf-8")
             syslog.syslog(syslog.LOG_DEBUG, "rsyncupload: rsync reported:\n%s" % stroutput)
         except OSError, e:
             if e.errno == errno.ENOENT:
@@ -117,6 +124,7 @@ if __name__ == '__main__':
                            rsync_dir,
                            config_dict['StdReport']['RSYNC']['path'],
                            config_dict['StdReport']['RSYNC']['server'],
-                           config_dict['StdReport']['RSYNC']['user'])
+                           config_dict['StdReport']['RSYNC']['user'],
+                           config_dict['StdReport']['RSYNC']['port'])
     rsync_upload.run()
     

@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-<!-- $Revision: 1028 $ -->
+<!-- $Revision: 1173 $ -->
 <!-- $Author: tkeffer $ -->
-<!-- $Date: 2013-02-15 08:44:07 -0800 (Fri, 15 Feb 2013) $ -->
+<!-- $Date: 2013-04-15 09:16:36 -0700 (Mon, 15 Apr 2013) $ -->
 <!-- For some reason, the table of contents generator used in this -->
 <!-- document demands that all heading elements be on one line. -->
 
@@ -26,13 +26,13 @@ function showtab(tab,id) {
   document.getElementById(tab+'-tab-'+id).className = 'tab selected';
 }
   </script>
-</head>
+  </head>
 
 <body>
 
   <h1 class="title">User's Guide to the <span class="code">weewx</span> Weather System<br />
     <span class='version'>
-Version: 2.2.1
+Version: 2.3.1
     </span>
   </h1>
 
@@ -55,7 +55,7 @@ Version: 2.2.1
       see <a href="http://www.threefools.org/weewx">Hood River West</a>. </p>
     <p>Key features: </p>
     <ul>
-      <li>An easy to understand, simple, extensible micro-kernel architecture;</li>
+      <li>Support for many popular weather stations;</li>
       <li>Uploads to popular weather sites, such as Weather Underground and CWOP;</li>
       <li>Uploads to your website using FTP or rsync;</li>
       <li>Support for multiple <em>skins</em>;</li>
@@ -63,6 +63,7 @@ Version: 2.2.1
       <li>Support for multiple unit systems;</li>
       <li>Support for sqlite or MySQL databases;</li>
       <li>Calibration corrections;</li>
+      <li>An easy to understand, simple, extensible micro-kernel architecture;</li>
       <li>Ability to extend <span class="code">weewx</span> with new services 
 	and reports. </li>
     </ul>
@@ -108,21 +109,21 @@ Version: 2.2.1
 	<td>WS1090</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WS2080</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td>Tested</td>
       </tr>
       <tr>
 	<td>WS2090</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
@@ -152,14 +153,14 @@ Version: 2.2.1
 	<td>6975</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>6976</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
@@ -167,115 +168,145 @@ Version: 2.2.1
 	<td>WH1080</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td>Tested</td>
       </tr>
       <tr>
 	<td>WH1081</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WH1091</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WH1090</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td>Tested</td>
       </tr>
       <tr>
 	<td>WS1080</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WA2080</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WA2081</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WH2080</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WH2081</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WH3080</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WH3081</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td>Tested</td>
+      </tr>
+      <tr>
+	<td class="text_highlight" rowspan="2">La Crosse</td>
+	<td>C86234</td>
+	<td>USB</td>
+	<td class="code">pyusb</td>
+        <td>WS28xx<sup><a href='#ws28xx'>6</a></sup></td>
+	<td>Experimental</td>
+      </tr>
+      <tr>
+	<td>WS-28XX</td>
+	<td>USB</td>
+	<td class="code">pyusb</td>
+        <td>WS28xx<sup><a href='#ws28xx'>6</a></sup></td>
+	<td>Experimental</td>
       </tr>
       <tr>
 	<td class="text_highlight">National Geographic</td>
 	<td>265</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
-	<td class="text_highlight" rowspan="3">Oregon Scientific</td>
+	<td class="text_highlight" rowspan="4">Oregon Scientific</td>
 	<td>WMR100N</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>WMR-USB<sup><a href='#wmrusb'>2</a></sup></td>
+        <td>WMR100<sup><a href='#wmr100'>2</a></sup></td>
 	<td>Tested</td>
+      </tr>
+      <tr>
+	<td>WMR200</td>
+	<td>USB</td>
+	<td class="code">pyusb</td>
+        <td>WMR200<sup><a href="#wmr200">3</a></sup></td>
+	<td>Experimental</td>
       </tr>
       <tr>
 	<td>WMR918</td>
 	<td>Serial</td>
 	<td class="code">pyserial</td>
-        <td>WMR-918<sup><a href='#wmr9xx'>3</a></sup></td>
+        <td>WMR9x8<sup><a href='#wmr9x8'>4</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WMR968</td>
 	<td>Serial</td>
 	<td class="code">pyserial</td>
-        <td>WMR-918<sup><a href='#wmr9xx'>3</a></sup></td>
+        <td>WMR9x8<sup><a href='#wmr9x8'>4</a></sup></td>
 	<td>Tested</td>
+      </tr>
+      <tr>
+	<td class="text_highlight">TFA</td>
+	<td>Primus</td>
+	<td>USB</td>
+	<td class="code">pyusb</td>
+        <td>WS28xx<sup><a href='#ws28xx'>6</a></sup></td>
+	<td>Experimental</td>
       </tr>
       <tr>
 	<td class="text_highlight">Tycon</td>
 	<td>TP1080WC</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
@@ -283,35 +314,42 @@ Version: 2.2.1
 	<td>W-8681</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
       <tr>
 	<td>WX-2008</td>
 	<td>USB</td>
 	<td class="code">pyusb</td>
-        <td>FineOffsetUSB<sup><a href='#fousb'>4</a></sup></td>
+        <td>FineOffsetUSB<sup><a href='#fousb'>5</a></sup></td>
 	<td></td>
       </tr>
     </table>
 
     <ol>
-      <li><a name='vantage'>Davis &quot;Vantage&quot;</a> series of weather stations, including the
-	<a href="http://www.davisnet.com/weather/products/vantage-pro-professional-weather-stations.asp">
-	  VantagePro2</a>&trade; and <a href="http://www.vantagevue.com/">VantageVue</a>&trade;, 
-	using serial, USB, or
-	<a href="http://www.davisnet.com/weather/products/weather_product.asp?pnum=06555">
-	  WeatherLinkIP</a>&trade; connections. Both the &quot;Rev A&quot; (firmware 
-	dated before 22 April 2002) and &quot;Rev B&quot; versions are supported.
+      <li id="vantage">Davis &quot;Vantage&quot; series of weather stations, including the
+         <a href="http://www.davisnet.com/weather/products/vantage-pro-professional-weather-stations.asp">
+	     VantagePro2</a>&trade; and <a href="http://www.vantagevue.com/">VantageVue</a>&trade;, 
+	     using serial, USB, or <a href="http://www.davisnet.com/weather/products/weather_product.asp?pnum=06555">
+	     WeatherLinkIP</a>&trade; connections. Both the &quot;Rev A&quot; (firmware 
+         dated before 22 April 2002) and &quot;Rev B&quot; versions are supported.
       </li>
-      <li><a name='wmrusb'>Oregon Scientific WMR-USB</a> series.  Tested on the
-	<a href="http://us.oregonscientific.com/cat-Weather-sub-Professional-Weather-Stations-prod-Pro-Wireless-Weather-Station.html">WMR100N</a>, other stations may work as well.</li>
-      <li><a name='wmr9xx'>Oregon Scientific WMR-918/968</a> series.  Tested on the
-	<a href="http://www.oregonscientificstore.com/oregon_scientific/product.asp?itmky=659831">Oregon Scientific WMR-968</a>, other stations may work as well.</li>
-      <li><a name='fousb'>Fine Offset</a> series of weather stations. These are branded by
+      <li id="wmr100">Oregon Scientific WMR100 series.  Tested on the
+        <a href="http://us.oregonscientific.com/cat-Weather-sub-Professional-Weather-Stations-prod-Pro-Wireless-Weather-Station.html">WMR100N</a>, other stations may work as well.</li>
+      <li id="wmr200">Oregon Scientific WMR200 series. This is an experimental version 
+	  &mdash; it may or may not work. Please report any problems!
+	  </li>
+      <li id="wmr9x8">Oregon Scientific WMR-918/968 series.  Tested on the
+        <a href="http://www.oregonscientificstore.com/oregon_scientific/product.asp?itmky=659831">Oregon Scientific WMR-968</a>, other stations may work as well.
+      </li>
+      <li id="fousb">Fine Offset series of weather stations. These are branded by
         many vendors, including Ambient Weather, National Geographic, Watson,
         Elecsa, Tycon, Maplin, Froggit, and others. Tested on the
-        <a href="http://www.ambientweather.com/amws2080.html">Ambient Weather WS2080</a>, other stations may work as well.</li>
+        <a href="http://www.ambientweather.com/amws2080.html">Ambient Weather WS2080</a>, other stations may work as well.
+      </li>
+      <li id='ws28xx'>La Crosse WS-28xx series.  This is an experimental version 
+	  &mdash; it may or may not work.  Please report any problems!
+      </li>
     </ol>
 
     <h1 id="Prerequisites">System Requirements</h1>
@@ -356,7 +394,7 @@ Version: 2.2.1
       By contrast, the package approach is somewhat simpler, but it requires 
       root privileges and will install the bits and pieces of 
       <span class="code">weewx</span> in standard operating system
-      locations instead of a single directory. The net effect is that
+      locations across the file system instead of in a single directory. The net effect is that
       configuration files, templates, and code will all be installed in
       separate locations, most of which will require root privileges to
       modify.</p>
@@ -537,11 +575,11 @@ Version: 2.2.1
 
     <br/>
     
-    <h3><a href='debian.htm'>Installing from DEB package</a></h3>
+    <h2><a href='debian.htm'>Installing from DEB package</a></h2>
     <p>For Debian, Ubuntu, Mint operating systems.</p>
-    <h3><a href='redhat.htm'>Installing from RPM package</a></h3>
+    <h2><a href='redhat.htm'>Installing from RPM package</a></h2>
     <p>For Redhat, CentOS, Fedora operating systems.</p>
-    <h3><a href='setup.htm'>Installing using the Python tool setup.py</a></h3>
+    <h2><a href='setup.htm'>Installing using the Python tool setup.py</a></h2>
     <p>For all operating systems.</p>
 
     <h1>Configuring <span class="code">weewx</span></h1>
@@ -602,6 +640,8 @@ Version: 2.2.1
       stations support this. Set to the altitude of the station and the unit used 
       for the altitude. Example: </p>
     <p class="tty">altitude = 700, foot</p>
+	  <p>An example in meters:</p>
+	  <p class="tty">altitude = 220, meter</p>
     <p class="config_option"><span class="config_important">rain_year_start
     </span></p>
     <p>Normally the start of the rain year is downloaded from your hardware, but 
@@ -618,11 +658,15 @@ Version: 2.2.1
 	<td>Davis Vantage weather stations</td>
       </tr>
       <tr>
-	<td class="code">WMR-USB</td>
-	<td>Oregon Scientific WMR-USB series stations</td>
+	<td class="code">WMR100</td>
+	<td>Oregon Scientific WMR100 series stations</td>
       </tr>
       <tr>
-	<td class="code">WMR-918</td>
+	<td class="code">WMR200</td>
+	<td>Oregon Scientific WMR200 series stations (experimental)</td>
+      </tr>
+      <tr>
+	<td class="code">WMR9x8</td>
 	<td>Oregon Scientific WMR-918/968 series station</td>
       </tr>
       <tr>
@@ -673,15 +717,23 @@ Version: 2.2.1
     <p class="config_option">max_tries </p>
     <p>How many times to try again before giving up. Default is 4. </p>
 
-    <h3 class="config_section">[WMR-USB]</h3>
-    <p>This section is for options relating to the Oregon Scientific WMR series
+    <h3 class="config_section">[WMR100]</h3>
+    <p>This section is for options relating to the Oregon Scientific WMR100 series
       of weather stations with USB connectors.</p>
     <p class="config_option">stale_wind</p>
     <p>How long a wind record can be used to calculate wind chill (in seconds).
       Default is 30.</p>
 
-    <h3 class="config_section">[WMR-918]</h3>
-    <p>This section is for options relating to the Oregon Scientific WMR-918
+    <h3 class="config_section">[WMR200]</h3>
+    <p>This section is for options relating to the Oregon Scientific WMR200 series
+      of weather stations with USB connectors. This support is experimental. Please
+      report any problems!</p>
+    <p class="config_option">stale_wind</p>
+    <p>How long a wind record can be used to calculate wind chill (in seconds).
+      Default is 30.</p>
+
+    <h3 class="config_section">[WMR9x8]</h3>
+    <p>This section is for options relating to the Oregon Scientific WMR-918/968
       series of weather stations with serial connectors.</p>
     <p class="config_important">type</p>
     <p>For the moment, only <span class="code">serial</span> is supported.</p>
@@ -700,6 +752,29 @@ Version: 2.2.1
       weather stations with USB connectors.</p>
     <p class="config_important">model</p>
     <p>Set to the station model. For example, WH1080, WS2080, WH3081, etc. </p>
+    <p class='config_option'>pressure_offset</p>
+    <p>The offset, in millibars, that is applied to values from the station sensor.  This offset is applied to the station pressure <i>before</i> calculating barometer and altimeter sea level pressures.  Only the raw station pressure is recorded to database, not the station pressure with offset applied.</p>
+    <p class='config_option'>polling_mode</p>
+    <p>One of <span class='code'>PERIODIC</span> or
+      <span class='code'>ADAPTIVE</span>.  In
+      <span class='code'>PERIODIC</span> mode,
+      <span class='code'>weewx</span> queries the console at regular intervals
+      determined by the <span class='code'>polling_interval</span>.
+      In <span class='code'>ADAPTIVE</span> mode,
+      <span class='code'>weewx</span> attempts to query the 
+      console at times when it is not reading data from the sensors or writing
+      data to memory.  The default is <span class='code'>PERIODIC</span>.</p>
+    <p class='config_option'>polling_interval</p>
+    <p>The frequency, in seconds, at which <span class='code'>weewx</span> will
+      poll the console for data.  This setting applies only when the 
+      <span class='code'>polling_mode</span> is
+      <span class='code'>PERIODIC</span>.</p>
+
+    <h3 class='config_section'>[WS28xx]</h3>
+    <p>This section is for options relating to the La Crosse WS-28xx series of weather stations.</p>
+    <p class='config_option'>pressure_offset</p>
+    <p>The offset, in millibars, that is applied to values from the station sensor.  This offset is applied to the station pressure <i>before</i> calculating barometer and altimeter sea level pressures.  Only the raw station pressure is recorded to database, not the station pressure with offset applied.</p>
+
     <h3 class="config_section">[Simulator]</h3>
     <p>This section is for options relating to the software weather station simulator 
       that comes with <span class="code">weewx</span>.</p>
@@ -1093,44 +1168,50 @@ Version: 2.2.1
     <p>Weewx comes with a configuration utlity, <span class="code">wee_config_vantage</span>, 
       that can set many of the on-board EEPROM constants in the Davis Vantage stations, 
       such as its archive interval, altitude, rain bucket type, <em>etc.</em> </p>
-    <p>Run it with the configuration file as an argument and <span class="code">
-	--help</span> as an option to see its usage: </p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --help </p>
+    <p>Run it with <span class="code">--help</span> as an option to see its usage: </p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage --help </p>
     <p>This will print out something like:</p>
-    <p class="tty">Usage: wee_config_vantage: config_path [--help] [--info] [--clear]
-     [--set-interval=SECONDS] [--set-altitude=FEET] [--set-barometer=inHg]
-     [--set-bucket=CODE] [--set-rain-year-start=MM] [--set-time]
-     [--set-lamp=['on'|'off']] [--dump] [--start | -- stop]
+    <p class="tty">Usage: wee_config_vantage: [config_file] [--help] [--info] [--clear]
+                           [--set-interval=SECONDS] [--set-altitude=FEET] [--set-barometer=inHg] 
+                           [--set-bucket=CODE] [--set-rain-year-start=MM] [--set-time]
+                           [--set-lamp=['on'|'off]] [--dump] [--logger_summary=FILE] [--start | --stop]
 
-Configures the VantagePro weather station.
+Configures the Davis Vantage weather station.
 
 Options:
-  -h, --help               show this help message and exit
-  --info                   To print configuration, reception, and barometer
-                            calibration information about your weather station.
-  --clear                  To clear the memory of your weather station.
-  --set-interval=SECONDS   Sets the archive interval to the specified number of
-                            seconds. Valid values are 60, 300, 600, 900, 1800,
-                            3600, or 7200.
-  --set-altitude=FEET      Sets the altitude of the station to the specified
-                            number of feet.
-  --set-barometer=inHg     Sets the barometer reading of the station to a known
-                            correct value in inches of mercury. Specify 0 (zero)
-                            to have the console pick a sensible value.
-  --set-bucket=CODE        Set the type of rain bucket. Specify '0' for 0.01
-                            inches; '1' for 0.2 MM; '2' for 0.1 MM
-  --set-rain-year-start=MM Set the rain year start (1=Jan, 2=Feb, etc.).
-  --set-time               Set the onboard clock to the current time.
-  --set-lamp=ON|OFF        Turn the console lamp 'ON' or 'OFF'
-  --start                  Start the logger.
-  --stop                   Stop the logger.
-  --dump                   Dump all data to the archive. NB: This may result in
-                           many duplicate primary key errors.
+  -h, --help            show this help message and exit
+  --config=FILE         use configuration file FILE
+  --info                To print configuration, reception, and barometer
+                        calibration information about your weather station.
+  --clear               To clear the memory of your weather station.
+  --set-interval=SECONDS
+                        Sets the archive interval to the specified number of
+                        seconds. Valid values are 60, 300, 600, 900, 1800,
+                        3600, or 7200.
+  --set-altitude=FEET   Sets the altitude of the station to the specified
+                        number of feet.
+  --set-barometer=inHg  Sets the barometer reading of the station to a known
+                        correct value in inches of mercury. Specify 0 (zero)
+                        to have the console pick a sensible value.
+  --set-bucket=CODE     Set the type of rain bucket. Specify '0' for 0.01
+                        inches; '1' for 0.2 MM; '2' for 0.1 MM
+  --set-rain-year-start=MM
+                        Set the rain year start (1=Jan, 2=Feb, etc.).
+  --set-time            Set the onboard clock to the current time.
+  --set-lamp=ON|OFF     Turn the console lamp 'ON' or 'OFF'
+  --start               Start the logger.
+  --stop                Stop the logger.
+  --dump                Dump all data to the archive. NB: This may result in
+                        many duplicate primary key errors.
+  --logger-summary=FILE
+                        Save diagnostic summary to FILE (for debugging the 
+                        logger).
 
-Mutating actions will request confirmation before proceeding.</p>
+Mutating actions will request confirmation before proceeding.
+</p>
     <p>It is useful to run it with the <span class="code">--info</span> option to 
       see what the current EEPROM settings are on your station: </p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --info </p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage --info </p>
     <p>This will print out something like: </p>
     <p class="tty">VantagePro EEPROM settings:
       
@@ -1184,7 +1265,7 @@ Offset:                       -1.000</p>
       dates after about 2006.</p>
     <p><span class="highlight">Highlighted</span> values can be changed.</p>
     <p>For example, to change the archive interval to 10 minutes (600 seconds):</p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --set-interval=600</p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage --set-interval=600</p>
     <p>Other parameters can be set in a similar manner.</p>
     <h3 id="Archive_interval">Archive interval</h3>
     <p>Valid archive intervals are 60, 300, 600, 900, 1800, 3600, and 7200. However, 
@@ -1193,8 +1274,8 @@ Offset:                       -1.000</p>
       is due. If this is the case, you should pick an archive interval of at least 
       300 seconds, or trim the number of files you are using. </p>
     <p>I have found that a five minute (300 seconds) archive interval works well 
-      for the VantagePro2. Because of the large amount of onboard memory it carries, 
-      going to a larger interval really does not have any advantages. </p>
+      for the Vantage stations. Because of the large amount of onboard memory they carry, 
+      going to a larger interval does not have any real advantages. </p>
     <p><em>Choose your archiving interval carefully! </em>Once chosen, it cannot 
       be changed without messing up your statistics (highs and lows will be OK, but 
       averages and rms wind speed will be wrong). </p>
@@ -1202,7 +1283,7 @@ Offset:                       -1.000</p>
     <p>Normally, this is set by Davis, but if you have replaced your bucket with 
       a different kind, you might want to reconfigure. For example, to change to a 
       0.1MM bucket (bucket code &quot;2&quot;), use the following:</p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --set-bucket=2</p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage --set-bucket=2</p>
     <h3>Dumping the logger memory</h3>
 	  <p>Generally, <span class="code">weewx</span> downloads only new archive 
 	  records from the on-board logger in the Vantage. However, occasionally the 
@@ -1213,7 +1294,7 @@ Offset:                       -1.000</p>
 	  lose any data which might have accumulated in the logger memory, but not 
 	  yet downloaded. By using the <span class="code">--dump</span> command 
 	  before clearing the memory, you might be able to save these data. </p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --dump</p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage --dump</p>
 	  <p>This will dump all data archived in the Vantage memory directly to the 
 	  database, without regard to whether or not they have been seen before. 
 	  Because the command dumps <em>all</em> data, it may result in many 
@@ -1222,33 +1303,39 @@ Offset:                       -1.000</p>
       <h2>Fine Offset</h2>
     <p>The configuration utility <span class='code'>wee_config_fousb</span> is
       designed to diagnose and configure Fine Offset stations.</p>
-    <p>Run it with the configuration file as an argument and
-    <span class='code'>--help</span> as an option to see its usage:</p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --help </p>
+    <p>Run it with <span class='code'>--help</span> as an option to see its usage:</p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb --help </p>
     <p>This will print out something like:</p>
-    <p class='tty'>Usage: wee_config_fousb config_file [options]
+    <p class='tty'>Usage: wee_config_fousb [config_file] [options] [--help]
 
 Configuration utility for Fine Offset weather stations.
 
 Options:
-  -h, --help         show this help message and exit
-  --info             display weather station configuration
-  --check-pressures  query station for pressure sensor data
-  --check-units      compare raw and converted LOOP packets
-  --check-usb        test the quality of the USB connection
-  --history=N        display the latest N records
-  --format=FORMAT    format for output, one of raw, table, or dict
-  --set-clock        set station clock to computer time
-  --set-pressure=P   set relative pressure to P hPa (mbar)
-  --set-interval=N   set logging interval to N minutes
-  --clear-memory     clear station memory
-  -y                 answer yes to every prompt
-  --debug            display diagnostic information while running
+  -h, --help           show this help message and exit
+  --config=FILE        use configuration file FILE
+  --info               display weather station configuration
+  --check-pressures    query station for pressure sensor data
+  --check-units        compare raw and converted LOOP packets
+  --check-usb          test the quality of the USB connection
+  --check-fixed-block  monitor the contents of the fixed block
+  --fixed-block        display the contents of the fixed block
+  --live               display live readings from the station
+  --logged             display logged readings from the station
+  --history-since=N    display records since N minutes ago
+  --history=N          display N records
+  --format=FORMAT      format for output, one of raw, table, or dict
+  --set-clock          set station clock to computer time
+  --set-pressure=P     set relative pressure to P hPa (mbar)
+  --set-interval=N     set logging interval to N minutes
+  --clear-memory       clear station memory
+  --slp=SLP            calculate pressure offset from sea level pressure SLP
+  -y                   answer yes to every prompt
+  --debug              display diagnostic information while running
 
 Mutating actions will request confirmation before proceeding.</p>
     <p>Display the station settings with the <span class='code'>--info</span>
       option.</p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --info </p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb --info </p>
     <p>This will result in something like this:</p>
     <p class='tty'>Fine Offset station settings:
                     local time: 2013.02.11 18:34:28 CET
@@ -1278,14 +1365,111 @@ Mutating actions will request confirmation before proceeding.</p>
                      wind_coef: None
                      wind_mult: 0</p>
     <p><span class="highlight">Highlighted</span> values can be modified with the <span class='code'>wee_config_fousb</span> utility.</p>
+
+    <h3>Calibrating the pressure sensor</h3>
+    <p>The pressure sensor in Fine Offset stations measures absolute, or station pressure.  The sensor pressure may be off a bit when the station is at sea level, and almost certainly will be off when the station is above sea level.  Stations at sea level are typically off by 1 to 10 millibars, while stations above a few hundred meters may be off by hundreds of millibars.  When reporting weather data, <span class='code'>weewx</span> will calculate the equivalent sea level pressure, but the pressure sensor must be calibrated and an altitude must be specified.</p>
+    <p>To calibrate the pressure sensor, specify a <span class='code'>pressure_offset</span>, in millibars, in <span class='code'>weewx.conf</span>.  If you do not know what the offset should be, use the <span class='code'>wee_config_fousb</span> 
+	utility to calculate this offset given the station altitude and a valid 
+	sea-level pressure from a nearby known-correct station.</p>
+    <p>For example, if the sea level pressure from a verified source is 1003.048 hPa, the following example will calculate the offset then ask whether to insert it into <span class='code'>weewx.conf</span>.  It uses the altitude specified in <span class='code'>weewx.conf</span> and the station pressure and temperature.</p>
+    <p class='tty'><span class="symcode">$BIN_ROOT</span>/wee_config_fousb --slp=1003.048</p>
+    <p>The output will look something like this:</p>
+    <p class='tty'>Querying the station...
+Pressure offset is None
+Set pressure offset to 1.247000 hPa (y/n)? y
+Pressure offset is now 1.247000</p>
+    <p>For those using Imperial units, to convert inHg to hPa (mbar), multiply by 33.86389</p>
+    <p><span class='code'>weewx</span> does not use the <i>relative pressure</i> in the Fine Offset console.</p>
+    <p>To display sensor, relative, and calculated pressures:</p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb --check-pressures</p>
+
+    <h3>Dumping the console memory</h3>
+    <p>Fine Offset stations store records in a circular buffer - once the buffer fills, the oldest records are replaced by newer records.  The 1080 and 2080 consoles store up to 4080 records.  The 3080 consoles store up to 3264 records.  The <span class='code'>data_count</span> indicates how many records are in memory.  The <span class='code'>read_period</span> indicates the number of minutes between records.  <span class='code'>wee_config_fousb</span> can display these records in space-delimited, raw bytes, or dictionary format.</p>
     <p>For example, to display the most recent 30 records from the console memory:</p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --history=30</p>
-    <p>To test the quality of the USB connection to the console:</p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --check-usb</p>
-    <p>To display sensor and calculated pressures:</p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --check-pressures</p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb --history=30</p>
     <p>To clear the console memory:</p>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --clear-memory</p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb --clear-memory</p>
+
+    <h3>Checking the USB quality</h3>
+    <p>Use the <span class='code'>wee_config_fousb</span> utility to test the quality of the USB connection between computer and console.  Poor quality USB cables, under-powered USB hubs, and other devices on the bus can interfere with communication.</p>
+    <p>To test the quality of the USB connection to the console:</p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_fousb --check-usb</p>
+    <p>Let the utility run for at least a few minutes, or possibly an hour or two.  It is not unusual to see a few bad reads in an hour, but if you see many bad reads within a few minutes, consider replacing the USB cable, USB hub, or removing other devices from the bus.</p>
+
+    <h3>Operating modes</h3>
+    <p>When <span class='code'>weewx</span> starts up it will attempt to download all records from the console since the last record in the archive database.
+    </p>
+    <p>There are two modes for collecting 'live' sensor readings, adaptive or periodic, and two modes for obtaining archive records, hardware or software.
+    </p>
+    <p>When reading 'live' data, <span class='code'>weewx</span> can read as fast as possible, or at a user-defined period.  This is controlled by the <span class='code'>polling_mode</span> parameter.
+    </p>
+    <table>
+      <tr>
+        <td width='15%'>Mode</td>
+        <td width='30%'><span class='code'>weewx.conf</span></td>
+        <td>Notes</td>
+      </tr>
+      <tr>
+        <td><p>ADAPTIVE</p></td>
+        <td>
+          <p class='tty' style='margin:0'>[FineOffsetUSB]
+    polling_mode = ADAPTIVE</p>
+        </td>
+        <td>
+          <p>In this mode, <span class='code'>weewx</span> reads data from the station as often as possible, but at intervals that avoid communication between the console and the sensors.  Nominally this results in reading data every 48 seconds.</p>
+        </td>
+      </tr>
+      <tr>
+        <td><p>PERIODIC</p></td>
+        <td>
+          <p class='tty' style='margin:0'>[FineOffsetUSB]
+    polling_mode = PERIODIC
+    polling_interval = 60</p>
+        </td>
+        <td>
+          <p>In this mode, <span class='code'>weewx</span> reads data from the station every <span class='code'>polling_interval</span> seconds.</p>
+        </td>
+      </tr>
+    </table>
+    <p>To obtain archive records, <span class='code'>weewx</span> can read archive records from the station console, or calculate archive records independent of the station memory.  This is controlled by the <span class='code'>record_generation</span> parameter.
+    </p>
+    <table>
+      <tr>
+        <td width='15%'>Mode</td>
+        <td width='30%'><span class='code'>weewx.conf</span></td>
+        <td>Notes</td>
+      </tr>
+      <tr>
+        <td><p>Read from archive</p></td>
+        <td>
+          <p class='tty' style='margin:0'>[StdArchive]
+    archive_interval = 300
+    record_generation = hardware</p>
+        </td>
+        <td>
+          <p>In this mode, archive records are read from the console archive.  Each console archive record is an average of live samples over the logging interval, so each record in the weewx archive database will be an average of station sensor readings.
+          </p>
+          <p>The <span class='code'>archive_interval</span> should match the logging interval specified in the console. Use <span class='code'>wee_config_fousb</span> to set the console logging interval.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><p>Calculate from sensors</p></td>
+        <td>
+          <p class='tty' style='margin:0'>[StdArchive]
+    archive_interval = 300
+    record_generation = software</p>
+        </td>
+        <td>
+          <p>In this mode, <span class='code'>weewx</span> calculates archive records based on the live data from the console.  The <span class='code'>archive_interval</span> determines how often an archive record will be calculated.
+          </p>
+        </td>
+      </tr>
+    </table>
+    <p>The <span class='code'>archive_interval</span> should always be greater than the <span class='code'>polling_interval</span>.  300 (5 minutes) is a typical value for the archive interval.
+    </p>
+    <p>If the <span class='code'>polling_mode</span> is <span class='code'>PERIODIC</span> and the <span class='code'>polling_interval</span> is greater than the <span class='code'>archive_interval</span>, the archive records will be collected/calculated at every polling interval, not at every archive interval.
+    </p>
 
       <h1>Configuring MySQL</h1>
     <p>This section applies only for those using MySQL.</p>
@@ -1318,7 +1502,12 @@ Mutating actions will request confirmation before proceeding.</p>
       permissions:</p>
     <p class="tty">mysql&gt; CREATE USER 'weewx'@'localhost' IDENTIFIED BY 'weewx';
 mysql&gt; GRANT select, update, create, delete, insert ON weewx.* TO weewx@localhost;
-mysql&gt; GRANT select, update, create, delete, insert ON stats.* TO weewx@localhost;</p>
+mysql&gt; GRANT select, update, create, delete, insert ON stats.* TO 
+	<a href="mailto:weewx@localhost">weewx@localhost</a>;</p>
+	  <p>In addition to configuring MySQL, you will also need to indicate to
+	  <span class="code">weewx</span> that you intend to use the configured 
+	  database. See section <span class="code"><a href="#[StdArchive]">
+	  [StdArchive]</a></span> for details.</p>
 
     <h1 id="Running_weewx">Running <span class="code">weewx</span></h1>
     <p><span class="code">Weewx</span> can be run either from the command line (useful 
@@ -1332,7 +1521,7 @@ mysql&gt; GRANT select, update, create, delete, insert ON stats.* TO weewx@local
       weather station uses. For example, if you are using a plain old serial port:
     </p>
     <p class="tty">sudo chmod 666 /dev/ttyS0 </p>
-    <p>Then run the main loop program, <span class="code">weewxd</span>, giving 
+    <p>Then run the main program, <span class="code">weewxd</span>, giving 
       the configuration file as its only parameter: </p>
     <p class="tty"><span class="symcode">$BIN_ROOT</span>/weewxd <span class="symcode">$CONFIG_ROOT</span>/weewx.conf</p>
     <p>It should start by downloading any data stored in your weather station into 
@@ -1541,9 +1730,9 @@ sudo /etc/init.d/apache restart</p>
       </li>
     </ul>
 
-    <h2>Hardware</h2>
+    <h2>Hardware problems</h2>
     <h3>Establishing connectivity</h3>
-    <p>If you unable to get anything out of <span class="code">weewx</span>, first 
+    <p>If you are unable to get anything out of <span class="code">weewx</span>, first 
       check that you have connectivity to your weather station. For the Davis stations, 
       you can use a terminal emulator (I like <span class="code">minicom</span> because 
       it can be run from through a simple TTY connection) to run a simple test. Set 
@@ -1676,8 +1865,8 @@ port = /dev/cuaU0</p>
       this case) asks the console for all archive data &quot;since&quot; some time. 
       The console then downloads the records one at a time. After it gets to the very 
       last one, the memory wraps around, and the timestamp will suddenly jump backwards 
-      in time a couple weeks &mdash; the software knows it has downloaded the last 
-      record and stops.</p>
+      in time a couple weeks &mdash; this how the software knows it has downloaded the last 
+      record and so it stops.</p>
     <p>However, if the internal memory gets garbled, the console will immediately 
       return archives in the past, and so it looks like the timestamps have decreased 
       in value and so <span class="code">weewx</span> figures that&#39;s it: there&#39;s 
@@ -1692,9 +1881,9 @@ port = /dev/cuaU0</p>
 	<span class="code">wee_config_vantage</span>. This may cause loss of data, but 
 	usually works. Adjust paths as necessary:</li>
     </ol>
-    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage <span class="symcode">$CONFIG_ROOT</span>/weewx.conf --clear </p>
+    <p class="tty"><span class="symcode">$BIN_ROOT</span>/wee_config_vantage --clear </p>
 	  <p>See also the section <em><a href="#Dumping_the_logger_memory">Dumping 
-	  the logger memory</a></em>.</p>
+	  the logger memory</a></em>, which may help you avoid data loss.</p>
     <h3>3rd party Vantage connectors</h3>
     <p>This section is for those who are using a homebrew or 3rd party connector 
       to a Davis Vantage console that does not contain a logger, such as the
@@ -1727,7 +1916,7 @@ Nov 27 20:30:21 raspberrypi weewx[5607]:         ****  Generator terminated...
 Nov 27 20:30:23 raspberrypi weewx[5607]: genimages: Generated 11 images in 2.53 seconds</p>
     <p>See the section on option <span class="code">
 	<a href="#record_generation">record_generation</a></span>.</p>
-    <h2>Software</h2>
+    <h2>Software problems</h2>
     <h3><span class="code">configobj</span> errors</h3>
     <p>These are errors in the configuration file. Two are very common. Incidentally, 
       these errors are far easier to diagnose when <span class="code">weewx</span> 

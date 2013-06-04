@@ -3,9 +3,9 @@
 #
 #    See the file LICENSE.txt for your full rights.
 #
-#    $Revision: 829 $
-#    $Author: tkeffer $
-#    $Date: 2013-01-19 08:05:49 -0800 (Sat, 19 Jan 2013) $
+#    $Revision: 1103 $
+#    $Author: mwall $
+#    $Date: 2013-03-22 19:44:00 -0700 (Fri, 22 Mar 2013) $
 #
 """Various handy utilities that don't belong anywhere else."""
 
@@ -13,6 +13,8 @@ import StringIO
 import calendar
 import datetime
 import math
+import os
+import sys
 import syslog
 import time
 import traceback
@@ -566,28 +568,26 @@ def startOfArchiveDay(time_ts, grace=1):
 def getDayNightTransitions(start_ts, end_ts, lat, lon):
     """Return the day-night transitions between the start and end times.
 
-    start_ts: A timestamp indicating the beginning of the period
+    start_ts: A timestamp (UTC) indicating the beginning of the period
 
-    end_ts: A timestamp indicating the end of the period
+    end_ts: A timestamp (UTC) indicating the end of the period
 
     returns: indication of whether the period from start to first transition
-    is day or night, plus array of transitions.
+    is day or night, plus array of transitions (UTC).
     """
     first = 'day'
     values = []
-    for t in range(start_ts, end_ts, 3600*24):
-        x = startOfDay(t) + 7200 # avoid dst issues
-        
+    for t in range(start_ts, end_ts+1, 3600*24):
+        x = startOfDay(t) + 7200
+        if lon > 0:
+            x += 24*3600
         x_tt = time.gmtime(x)
         y, m, d = x_tt[:3]
         (sunrise_utc, sunset_utc) = Sun.sunRiseSet(y, m, d, lon, lat)
-
-        # The above function returns its results in UTC hours. Convert
-        # to a local time tuple, then to a timestamp.
         sunrise_tt = utc_to_local_tt(y, m, d, sunrise_utc)
-        sunset_tt  = utc_to_local_tt(y, m, d, sunset_utc)
+        sunset_tt = utc_to_local_tt(y, m, d, sunset_utc)
         sunrise_ts = time.mktime(sunrise_tt)
-        sunset_ts  = time.mktime(sunset_tt)        
+        sunset_ts = time.mktime(sunset_tt)
 
         if start_ts < sunrise_ts < end_ts:
             values.append(sunrise_ts)
@@ -796,6 +796,74 @@ def tobool(x):
     except (ValueError, TypeError):
         pass
     raise ValueError("Unknown boolean specifier: '%s'." % x)
+
+def read_config(config_fn, args=None, msg_to_stderr=True, exit_on_fail=True):
+    """Read the specified configuration file, return a dictionary of the
+    file contents. If no file is specified, look in the standard locations
+    for weewx.conf. Returns the filename of the actual configuration file
+    as well as dictionary of the elements from the configuration file.
+    For backward compatibility, args may be specified, in which case the
+    first arg will be interpreted as the filename as long as it does not
+    start with a hyphen.
+
+    config_fn: configuration filename
+
+    args: command-line arguments
+
+    msg_to_stderr: If this is true, send error messages to stderr, otherwise
+    messages go to syslog.
+
+    exit_on_fail: If this is true, exit when file not found or parsing fails.
+    Otherwise re-throw the exception that caused the error.
+
+    return: filename, dictionary
+    """
+
+    locations = ['/etc/weewx', '/home/weewx']
+
+    # Figure out the config file
+    if config_fn is None:
+        if args is not None and len(args) > 0 and not args[0].startswith('-'):
+            config_fn = args[0]
+    if config_fn is None:
+        for f in locations:
+            fn = f + '/weewx.conf'
+            if os.path.isfile(fn):
+                config_fn = fn
+                break
+    if config_fn is None:
+        msg = 'No configuration file specified, and none found in any of:\n  %s' % ', '.join(locations)
+        if msg_to_stderr:
+            print >>sys.stderr, msg
+        else:
+            syslog.syslog(syslog.LOG_CRIT, msg)
+        if exit_on_fail:
+            exit(1)
+        return None, None
+
+    # Try to open up the configuration file. Declare an error if unable to.
+    try :
+        config_dict = configobj.ConfigObj(config_fn, file_error=True)
+    except IOError:
+        msg = "Unable to open configuration file %s" % config_fn
+        if msg_to_stderr:
+            print >>sys.stderr, msg
+        else:
+            syslog.syslog(syslog.LOG_CRIT, msg)
+        if exit_on_fail:
+            exit(1)
+        raise
+    except configobj.ConfigObjError:
+        msg = "Error wile parsing configuration file %s" % config_fn
+        if msg_to_stderr:
+            print >>sys.stderr, msg
+        else:
+            syslog.syslog(syslog.LOG_CRIT, msg)
+        if exit_on_fail:
+            exit(1)
+        raise
+
+    return config_fn, config_dict
     
 if __name__ == '__main__':
     import doctest

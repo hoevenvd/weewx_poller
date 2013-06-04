@@ -3,9 +3,9 @@
 #
 #    See the file LICENSE.txt for your full rights.
 #
-#    $Revision: 829 $
+#    $Revision: 1067 $
 #    $Author: tkeffer $
-#    $Date: 2013-01-19 08:05:49 -0800 (Sat, 19 Jan 2013) $
+#    $Date: 2013-03-15 10:13:23 -0700 (Fri, 15 Mar 2013) $
 #
 """Engine for generating reports"""
 
@@ -210,6 +210,7 @@ class RsyncGenerator(ReportGenerator):
                 remote_root = self.skin_dict['path'],
                 server      = self.skin_dict['server'],
                 user        = self.skin_dict.get('user', None),
+                port        = self.skin_dict.get('port', None),
                 delete      = bool(self.skin_dict.get('delete', False)))
         except Exception:
             syslog.syslog(syslog.LOG_DEBUG, "reportengine: rsync upload not requested. Skipped.")

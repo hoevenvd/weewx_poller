@@ -3,9 +3,9 @@
 #
 #    See the file LICENSE.txt for your full rights.
 #
-#    $Revision: 829 $
+#    $Revision: 1172 $
 #    $Author: tkeffer $
-#    $Date: 2013-01-19 08:05:49 -0800 (Sat, 19 Jan 2013) $
+#    $Date: 2013-04-15 08:50:25 -0700 (Mon, 15 Apr 2013) $
 #
 
 """Main engine for the weewx weather system."""
@@ -57,6 +57,9 @@ class StdEngine(object):
         timeout = int(config_dict.get('socket_timeout', 20))
         socket.setdefaulttimeout(timeout)
 
+        # Set up the callback dictionary:
+        self.callbacks = dict()
+
         # Set up the weather station hardware:
         self.setupStation(config_dict)
 
@@ -78,6 +81,8 @@ class StdEngine(object):
         # Find the driver name for this type of hardware
         driver = config_dict[stationType]['driver']
         
+        syslog.syslog(syslog.LOG_INFO, "wxengine: Loading station type %s (%s)" % (stationType, driver))
+
         # Import the driver:
         __import__(driver)
     
@@ -88,7 +93,7 @@ class StdEngine(object):
             # Now find the function 'loader' within the module:
             loader_function = getattr(driver_module, 'loader')
             # Now call it with the configuration dictionary as the only argument:
-            self.console = loader_function(config_dict)
+            self.console = loader_function(config_dict, self)
         except Exception, ex:
             # Caught unrecoverable error. Log it:
             syslog.syslog(syslog.LOG_CRIT, "wxengine: Unable to open WX station hardware: %s" % ex)
@@ -97,8 +102,6 @@ class StdEngine(object):
         
     def preLoadServices(self, config_dict):
         
-        # Set up the callback dictionary:
-        self.callbacks = dict()
         self.stn_info = weewx.station.StationInfo(self.console, **config_dict['Station'])
         
     def loadServices(self, config_dict):
@@ -213,6 +216,7 @@ class StdEngine(object):
         try:
             # Close the console:
             self.console.closePort()
+            del self.console
         except:
             pass
 
@@ -238,6 +242,9 @@ class StdService(object):
         """Bind the specified event to a callback."""
         # Just forward the request to the main engine:
         self.engine.bind(event_type, callback)
+        
+    def shutDown(self):
+        pass
 
 #===============================================================================
 #                    Class StdConvert
@@ -331,9 +338,12 @@ class StdCalibrate(StdService):
 
     def new_archive_record(self, event):
         """Apply a calibration correction to an archive packet"""
-        for obs_type in self.corrections:
-            if event.record.has_key(obs_type) and event.record[obs_type] is not None:
-                event.record[obs_type] = eval(self.corrections[obs_type], None, event.record)
+        # If the record was software generated, then any corrections have already been applied
+        # in the LOOP packet.
+        if event.origin != 'software':
+            for obs_type in self.corrections:
+                if event.record.has_key(obs_type) and event.record[obs_type] is not None:
+                    event.record[obs_type] = eval(self.corrections[obs_type], None, event.record)
 
 #===============================================================================
 #                    Class StdQC
@@ -405,7 +415,7 @@ class StdArchive(StdService):
             syslog.syslog(syslog.LOG_INFO, "wxengine: Using station hardware archive interval of %d" % self.archive_interval)
         except NotImplementedError:
             self.archive_interval = software_archive_interval
-            syslog.syslog(syslog.LOG_INFO, "wxengine: Using archive interval of %d from config file" % self.archive_interval)
+            syslog.syslog(syslog.LOG_INFO, "wxengine: Using config file archive interval of %d" % self.archive_interval)
 
         self.archive_delay    = config_dict['StdArchive'].as_int('archive_delay')
         if self.archive_delay <= 0:
@@ -538,10 +548,14 @@ class StdArchive(StdService):
         # Find out when the archive was last updated.
         lastgood_ts = self.archive.lastGoodStamp()
 
-        # Now ask the console for any new records since then. (Not all consoles
-        # support this feature).
-        for record in self.engine.console.genArchiveRecords(lastgood_ts):
-            self.engine.dispatchEvent(weewx.Event(weewx.NEW_ARCHIVE_RECORD, record=record))
+        try:
+            # Now ask the console for any new records since then. (Not all consoles
+            # support this feature).
+            for record in self.engine.console.genArchiveRecords(lastgood_ts):
+                self.engine.dispatchEvent(weewx.Event(weewx.NEW_ARCHIVE_RECORD, record=record, origin='hardware'))
+        except weewx.HardwareError, e:
+            syslog.syslog(syslog.LOG_ERR, "wxengine: Internal error detected. Catchup abandoned")
+            syslog.syslog(syslog.LOG_ERR, "****      %s" % e)
         
     def _software_catchup(self):
         # Extract a record out of the old accumulator. 
@@ -549,7 +563,7 @@ class StdArchive(StdService):
         # Add the archive interval
         record['interval'] = self.archive_interval / 60
         # Send out an event with the new record:
-        self.engine.dispatchEvent(weewx.Event(weewx.NEW_ARCHIVE_RECORD, record=record))
+        self.engine.dispatchEvent(weewx.Event(weewx.NEW_ARCHIVE_RECORD, record=record, origin='software'))
     
     def _new_accumulator(self, timestamp):
         start_archive_ts = weeutil.weeutil.startOfInterval(timestamp,
@@ -795,6 +809,13 @@ def sigHUPhandler(dummy_signum, dummy_frame):
     syslog.syslog(syslog.LOG_DEBUG, "wxengine: Received signal HUP. Throwing Restart exception.")
     raise Restart
 
+class Terminate(Exception):
+    """Exception thrown when terminating the engine."""
+
+def sigTERMhandler(dummy_signum, dummy_frame):
+    syslog.syslog(syslog.LOG_DEBUG, "wxengine: Received signal TERM.")
+    raise Terminate
+
 #===============================================================================
 #                    Function main
 #===============================================================================
@@ -808,14 +829,19 @@ def main(options, args, EngineClass=StdEngine) :
     # Set the logging facility.
     syslog.openlog('weewx', syslog.LOG_PID | syslog.LOG_CONS)
 
-    # Set up the reload signal handler:
+    # Set up the signal handlers.
     signal.signal(signal.SIGHUP, sigHUPhandler)
+    signal.signal(signal.SIGTERM, sigTERMhandler)
+
+    syslog.syslog(syslog.LOG_INFO, "wxengine: Initializing weewx version %s" % weewx.__version__)
+    syslog.syslog(syslog.LOG_INFO, "wxengine: Using Python %s" % sys.version)
 
     # Save the current working directory. A service might
     # change it. In case of a restart, we need to change it back.
     cwd = os.getcwd()
 
     if options.daemon:
+        syslog.syslog(syslog.LOG_INFO, "wxengine: pid file is %s" % options.pidfile)
         daemon.daemonize(pidfile=options.pidfile)
 
     while True:
@@ -837,7 +863,7 @@ def main(options, args, EngineClass=StdEngine) :
             # Create and initialize the engine
             engine = EngineClass(config_dict)
             # Start the engine
-            syslog.syslog(syslog.LOG_INFO, "wxengine: Starting up weewx version %s." % weewx.__version__)
+            syslog.syslog(syslog.LOG_INFO, "wxengine: Starting up weewx version %s" % weewx.__version__)
             engine.run()
     
         # Catch any recoverable weewx I/O errors:
@@ -870,7 +896,11 @@ def main(options, args, EngineClass=StdEngine) :
     
         except Restart:
             syslog.syslog(syslog.LOG_NOTICE, "wxengine: Received signal HUP. Restarting.")
-            
+
+        except Terminate:
+            syslog.syslog(syslog.LOG_INFO, "wxengine: Terminating weewx version %s" % weewx.__version__)
+            sys.exit()
+
         # If run from the command line, catch any keyboard interrupts and log them:
         except KeyboardInterrupt:
             syslog.syslog(syslog.LOG_CRIT,"wxengine: Keyboard interrupt.")
@@ -903,7 +933,7 @@ def getConfiguration(config_path):
         syslog.syslog(syslog.LOG_CRIT, "wxengine: Error while parsing configuration file %s" % config_path)
         raise
 
-    syslog.syslog(syslog.LOG_INFO, "wxengine: Using configuration file %s." % config_path)
+    syslog.syslog(syslog.LOG_INFO, "wxengine: Using configuration file %s" % config_path)
 
     return config_dict
     

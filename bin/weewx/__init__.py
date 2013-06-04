@@ -3,16 +3,16 @@
 #
 #    See the file LICENSE.txt for your full rights.
 #
-#    $Revision: 1027 $
+#    $Revision: 1173 $
 #    $Author: tkeffer $
-#    $Date: 2013-02-15 08:39:27 -0800 (Fri, 15 Feb 2013) $
+#    $Date: 2013-04-15 09:16:36 -0700 (Mon, 15 Apr 2013) $
 #
 """Package weewx. A set of modules for supporting a weather station on a sqlite database.
 
 """
 import time
 
-__version__="2.2.1"
+__version__="2.3.1"
 
 # Holds the program launch time in unix epoch seconds:
 # Useful for calculating 'uptime.'
@@ -47,7 +47,10 @@ class CRCError(WeeWxIOError):
 class RetriesExceeded(WeeWxIOError):
     """Exception thrown when max retries exceeded."""
 
-class UnknownArchiveType(StandardError):
+class HardwareError(StandardError):
+    """Exception thrown when an error is detected in the hardware."""
+    
+class UnknownArchiveType(HardwareError):
     """Exception thrown after reading an unrecognized archive type."""
 
 class UnsupportedFeature(StandardError):

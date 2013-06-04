@@ -1,7 +1,86 @@
 weewx change history
 --------------------
 
-2.2.1
+2.3.1 04/15/13
+
+Fixed bug that prevented Fine Offset stations from downloading archive
+records if the archive database had no records in it.
+
+rsync should now work with Python 2.5 and 2.6 (not just 2.7)
+
+
+2.3.0 04/10/13
+
+Davis Vantage stations can now produce station pressures (aka, "absolute
+pressure"), altimeter pressures, as well as sea-level pressure. These will
+be put in the archive database.
+
+Along the same line, 'altimeter' pressure is now reported to CWOP, rather
+than the 'barometer' pressure. If altimeter pressure is not available,
+no pressure is reported.
+
+Fixed bug in CWOP upload that put spaces in the upload string if the pressure
+was under 1000 millibars.
+
+A bad record archive type now causes a catch up to be abandoned, rather
+than program termination.
+
+Fixed bug in trends, when showing changes in temperature. NB: this fix will
+not work with explicit unit conversion. I.e., $trend.outTemp.degree_C will
+not work.
+
+Modified wee_config_vantage and wee_config_fousb so that the configuration
+file will be guessed if none is specified.
+
+Fixed wxformulas.heatindexC to handle arguments of None type.
+
+Fixed bug that causes Corrections to be applied twice to archive records if
+software record generation is used.
+
+rsync now allows a port to be specified.
+
+Fixed day/night transition bug.
+
+Added gradients to the day/night transitions.
+
+Numerous fixes to the WMR200 driver. Now has a "watchdog" thread.
+
+All of the device drivers have now been put in their own package
+'weewx.drivers' to keep them together. Many have also had name changes
+to make them more consistent:
+	OLD                        NEW
+	VantagePro.py (Vantage)    vantage.py (Vantage)
+	WMR918.py     (WMR-918)    wmr9x8.py  (WMR9x8)
+	wmrx.py       (WMR-USB)    wmr100.py  (WMR100)
+	
+	new (experimental) drivers:
+	wmr200.py (WMR200)
+	ws28xx.py (WS28xx)
+
+The interface to the device driver "loader" function has changed slightly. It
+now takes a second parameter, "engine". Details are in the Upgrading doc.
+
+The FineOffsetUSB driver now supports hardware archive record generation.
+
+When starting weewx, the FineOffsetUSB driver will now try to 'catch up' - it
+will read the console memory for any records that are not yet in the database.
+
+Added illuminance-to-radiation conversion in FineOffsetUSB driver.
+
+Added pressure calibration option to wee_config_fousb and explicit support for
+pressure calibration in FineOffsetUSB driver.
+
+Fixed windchill calculation in FineOffsetUSB driver.
+
+Fixed FineOffsetUSB driver to handle cases where the 'delay' is undefined,
+resulting in a TypeError that caused weewx to stop.
+
+The FineOffsetUSB driver now uses 'max_rain_rate' (measured in cm/hr) instead
+of 'max_sane_rain' (measured in mm) to filter spurious rain sensor readings.
+This is done in the driver instead of StdQC so that a single parameter can
+apply to both LOOP and ARCHIVE records.
+
+2.2.1 02/15/13
 
 Added a function call to the Vantage driver that allows the lamp to be
 turned on and off. Added a corresponding option to wee_config_vantage.
@@ -9,7 +88,7 @@ turned on and off. Added a corresponding option to wee_config_vantage.
 Fixed bug where an undefined wind direction caused an exception when using
 ordinal wind directions.
 
-2.2.0
+2.2.0 02/14/13
 
 Weewx can now be installed using Debian (DEB) or Redhat (RPM) packages, as well
 as with the old 'setup.py' method. Because they install things in different

@@ -3,9 +3,9 @@
 #
 #    See the file LICENSE.txt for your full rights.
 #
-#    $Revision: 730 $
-#    $Author: tkeffer $
-#    $Date: 2012-11-03 10:58:13 -0700 (Sat, 03 Nov 2012) $
+#    $Revision: 1052 $
+#    $Author: mwall $
+#    $Date: 2013-02-28 17:36:21 -0800 (Thu, 28 Feb 2013) $
 #
 """For uploading files to a remove server via FTP"""
 
@@ -208,7 +208,7 @@ if __name__ == '__main__':
     import configobj
     
     weewx.debug = 1
-    syslog.openlog('ftpupload', syslog.LOG_PID|syslog.LOG_CONS)
+    syslog.openlog('wee_ftpupload', syslog.LOG_PID|syslog.LOG_CONS)
     syslog.setlogmask(syslog.LOG_UPTO(syslog.LOG_DEBUG))
 
     if len(sys.argv) < 2 :

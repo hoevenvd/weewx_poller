@@ -4,9 +4,9 @@
 #
 #    See the file LICENSE.txt for your full rights.
 #
-#    $Revision: 1027 $
+#    $Revision: 1059 $
 #    $Author: tkeffer $
-#    $Date: 2013-02-15 08:39:27 -0800 (Fri, 15 Feb 2013) $
+#    $Date: 2013-03-11 08:59:56 -0700 (Mon, 11 Mar 2013) $
 #
 """Data structures and functions for dealing with units."""
 
@@ -610,10 +610,8 @@ class ValueOutputter(object):
         self.converter = converter
             
     def toString(self, addLabel=True, useThisFormat=None, NONE_string=None):
-        # Get the value tuple from my superclass:
-        vt = self.getValueTuple()
-        # Do the unit conversion:
-        vtx = self.converter.convert(vt)
+        # Get the value tuple in the target units:
+        vtx = self._raw_value_tuple
         # Then the format conversion:
         s = self.formatter.toString(vtx, self.context, addLabel=addLabel, useThisFormat=useThisFormat, NONE_string=NONE_string)
         return s
@@ -636,12 +634,8 @@ class ValueOutputter(object):
     
     def ordinal_compass(self):
         """Returns an ordinal compass direction (eg, 'NNW')"""
-        # Get the value tuple from my superclass:
-        vt = self.getValueTuple()
-        # Do any unit conversion:
-        vtx = self.converter.convert(vt)
-        # Then ask the formatter to look up an appropriate ordinate:
-        return self.formatter.to_ordinal_compass(vtx)
+        # Get the raw value tuple, then ask the formatter to look up an appropriate ordinate:
+        return self.formatter.to_ordinal_compass(self._raw_value_tuple)
         
     @property
     def formatted(self):
@@ -651,9 +645,17 @@ class ValueOutputter(object):
     @property
     def raw(self):
         """Returns the raw value without any formatting."""
+        return self._raw_value_tuple[0]
+
+    @property    
+    def _raw_value_tuple(self):
+        """Return a value tuple in the target units."""
+        # Get the value tuple from my superclass ...
         vt = self.getValueTuple()
-        vtx=self.converter.convert(vt)
-        return vtx[0]
+        # ... do the unit conversion ...
+        vtx = self.converter.convert(vt)
+        # ... and then return it
+        return vtx
     
 #===============================================================================
 #                        class ValueHelper

@@ -19,6 +19,10 @@ my $FILES_COPIED = 'reportengine: files copied';
 my $RECORDS_PUBLISHED = 'restful: records published';
 my $RECORDS_SKIPPED = 'restful: records skipped';
 my $FOUSB_UNSTABLE_READS = 'fousb: unstable reads';
+my $FOUSB_LOST_LOG_SYNC = 'fousb: lost log sync';
+my $FOUSB_LOST_SYNC = 'fousb: lost sync';
+my $FOUSB_MISSED_DATA = 'fousb: missed data';
+my $FOUSB_STATION_SYNC = 'fousb: station sync';
 my %counts = (
     $STARTUPS, 0,
     $ARCHIVES_GENERATED, 0,
@@ -28,6 +32,10 @@ my %counts = (
     $RECORDS_PUBLISHED, 0,
     $RECORDS_SKIPPED, 0,
     $FOUSB_UNSTABLE_READS, 0,
+    $FOUSB_LOST_LOG_SYNC, 0,
+    $FOUSB_LOST_SYNC, 0,
+    $FOUSB_MISSED_DATA, 0,
+    $FOUSB_STATION_SYNC, 0,
 );
 my %reports;
 my %errors;
@@ -47,6 +55,14 @@ while(defined($_ = <STDIN>)) {
         $counts{$FILES_COPIED} += $1;
     } elsif (/fousb: unstable read: blocks differ/) {
         $counts{$FOUSB_UNSTABLE_READS} += 1;
+    } elsif (/fousb: lost log sync/) {
+        $counts{$FOUSB_LOST_LOG_SYNC} += 1;
+    } elsif (/fousb: lost sync/) {
+        $counts{$FOUSB_LOST_SYNC} += 1;
+    } elsif (/fousb: missed data/) {
+        $counts{$FOUSB_MISSED_DATA} += 1;
+    } elsif(/fousb: synchronising to the weather station/) {
+        $counts{$FOUSB_STATION_SYNC} += 1;
     } elsif (/restful: Skipped record/) {
         $counts{$RECORDS_SKIPPED} += 1;
     } elsif (/restful: Published record/) {
@@ -62,7 +78,9 @@ while(defined($_ = <STDIN>)) {
              /reportengine: FTP upload not requested/ ||
              /register:/ ||
              /\*\*\*\*  registration interval/ ||
+             /stats: Back calculated schema/ ||
              /stats: Backfilling stats database/ ||
+             /stats: backfilled \d+ days of statistics/ ||
              /stats: stats database up to date/ ||
              /stats: created schema for statistical database/ ||
              /\*\*\*\*  \'station\'/ ||
@@ -78,6 +96,7 @@ while(defined($_ = <STDIN>)) {
              /wxengine: Using archive database/ ||
              /wxengine: Using configuration file/ ||
              /wxengine: Using stats database/ ||
+             /wxengine: Using station hardware archive interval/ ||
              /wxengine: Record generation will be attempted in/ ||
              /wxengine: StdConvert target unit is/ ||
              /wxengine: Data will not be posted to/ ||
@@ -85,13 +104,30 @@ while(defined($_ = <STDIN>)) {
              /wxengine: Started thread for RESTful upload sites./ ||
              /wxengine: No RESTful upload sites/ ||
              /wxengine: retrying/ ||
-             /fousb: ptr changed/ ||
+             /fousb: altitude is/ ||
+             /fousb: archive interval is/ ||
+             /fousb: pressure offset is/ ||
+             /fousb: polling mode is/ ||
              /fousb: using \S+ polling mode/ ||
-             /fousb: live_data/ ||
+             /fousb: ptr changed/ ||
+             /fousb: new ptr/ ||
+             /fousb: new data/ ||
+             /fousb: live synchronised/ ||
+             /fousb: log synchronised/ ||
+             /fousb: log extended/ ||
              /fousb: delay/ ||
+             /fousb: avoid/ ||
              /fousb: setting sensor clock/ ||
              /fousb: setting station clock/ ||
-             /fousb: avoid/) {
+             /fousb: returning archive record/ ||
+             /fousb: packet timestamp/ ||
+             /fousb: log timestamp/ ||
+             /fousb: found \d+ archive records/ ||
+             /fousb: get \d+ records since/ ||
+             /fousb: synchronised to/ ||
+             /fousb: pressures:/) {
+        # ignore
+    } elsif (! /weewx/) {
         # ignore
     } else {
         push @unmatched, $_;
@@ -99,7 +135,7 @@ while(defined($_ = <STDIN>)) {
 }
 
 print "processing counts:\n";
-foreach my $k (keys %counts) {
+foreach my $k (sort keys %counts) {
     next if $counts{$k} == 0;
     printf("  %-40s %6d\n", $k, $counts{$k});
 }
